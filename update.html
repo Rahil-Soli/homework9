@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div><input type="text" id="title" placeholder="title">
+        <input type="text" id="author" placeholder="author">
+        <input type="text" placeholder="id" id="id">
+        <button id="submit">submit</button>
+    </div>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script>
+        $('$submit').click(function(){
+            let title=$('#title').val();
+            let author=$('#author').val();
+
+
+var settings = {
+  "url": `https://localhost:3000/posts/${id}`,
+  "method": "GET",
+  "timeout": 0,
+  headers: {
+    "Content-Type" : "application/json",
+
+  },
+  data: JSON.stringify({
+    title: tilte,
+    author: author,
+  })
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+
+  }
+);
+})
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script>
+    {
+        "userId": 1,
+        "id": 4,
+        "title": "eum et est occaecati",
+        "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
+      };
+       function getById(id) {
+        var settings = {
+            "url": `https://localhost:3000/posts/${id}`,
+            "method": "GET",
+            "timeout": 0,
+        }
+       }
+       </script>
+     <script> $.ajax(settings).done(function (response) {
+        console.log(response);
+        for(let i = 0; i<response.lenght;i++){
+          $('#demo').append(`<h2>${response[i].id} - ${response[i].title}</h2>`)
+        }
+      });
+    </script>
+</body>
+</html>

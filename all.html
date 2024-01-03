@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo">
+
+    </div>
+    
+</body>
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.all.min.js"></script>
+
+
+<script>
+  function showAllPosts() {
+    var settings = {
+  "url": "https://jsonplaceholder.typicode.com/posts/4",
+  "method": "GET",
+  "timeout": 0,
+};
+
+$.ajax(settings).done(function (response) {
+  $('#demo').empty();
+  console.log(response);
+  for(let i = 0; i<response.lenght;i++){
+    $('#demo').append(`<h2 class="post">${response[i].id} - ${response[i].title}</h2> <button class="delete" data-post-id="${}">X</button>`)
+  }
+});
+  }
+  $(document).on("click", "delete-post", function () {
+    console.log($(this)).attr("data-id")
+  })
+  !
+Swal.fire({
+  title: "Do you want to save the changes?",
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: "Save",
+  denyButtonText: `Don't save`
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire("Saved!", "", "success");
+  } else if (result.isDenied) {
+    Swal.fire("Changes are not saved", "", "info");
+  }
+});
+  showAllPosts();
+  function DeletePost(id) {
+    "url": `https://jsonplaceholder.typicode.com/posts/${id}`,
+  "method": "GET",
+  "timeout": 0,
+  }
+
+</script>

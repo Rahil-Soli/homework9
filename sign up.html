@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div class="container">
+    <h1>Welcome to Our Site</h1>
+    <form action="homepage.html">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Enter</button>
+    </form>
+</div>
+<style>
+    .container {
+    max-width: 450px;
+    margin-top: -550px;
+    background-color: rgb(93, 136, 180);
+    margin-left: 430px;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+</style>
+
+
+  <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // prevent the form from submitting
+
+    // perform any additional actions or validations here
+
+    // redirect to homepage.html
+    window.location.href = 'homepage.html';
+});
+
+ 
+  </script>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const particles = [];
+    const numParticles = 70;
+    const particleRadius = 7;
+    const lineColor = 'lightblue';
+    const lineWidth = 1;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.directionX = Math.random() - 0.8;
+        this.directionY = Math.random() - 0.8;
+        this.velocity = 0.5;
+      }
+
+      update() {
+        this.x += this.directionX * this.velocity;
+        this.y += this.directionY * this.velocity;
+
+        if (this.x + particleRadius > canvas.width || this.x - particleRadius < 0) {
+          this.directionX = -this.directionX;
+        }
+
+        if (this.y + particleRadius > canvas.height || this.y - particleRadius < 0) {
+          this.directionY = -this.directionY;
+        }
+
+        this.draw();
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, particleRadius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      for (let i = 0; i < numParticles; i++) {
+          const x = Math.random() * (canvas.width - particleRadius * 2) + particleRadius;
+          const y = Math.random() * (canvas.height - particleRadius * 2) + particleRadius;
+          const color = 'darkblue';
+          particles.push(new Particle(x, y, color));
+      }
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = lineColor;
+            ctx.lineWidth = lineWidth;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    window.addEventListener('resize', function () {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    init();
+    animate();
+  </script>
+</body>
+</html>
